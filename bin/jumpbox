@@ -145,7 +145,7 @@ install_spruce() {
 	# only works on v1.0.2 or newer
 	local v=$(github_version ${1} geofffranks/spruce)
 	if ! have spruce -v ${v}; then
-		sudo curl -LSs -o /usr/local/bin/spruce \
+		sudo curl -LSsf -o /usr/local/bin/spruce \
 			https://github.com/geofffranks/spruce/releases/download/v${v}/spruce-linux-amd64
 		sudo chmod 0755 /usr/local/bin/spruce
 		installed spruce -v
@@ -154,7 +154,7 @@ install_spruce() {
 
 install_terraform() {
   if ! have terraform -v ${1}; then
-    curl -LSs -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${1}/terraform_${1}_linux_amd64.zip \
+    curl -LSsf -o /tmp/terraform.zip https://releases.hashicorp.com/terraform/${1}/terraform_${1}_linux_amd64.zip \
       && sudo unzip /tmp/terraform.zip -d /usr/local/bin \
       && rm /tmp/terraform.zip
     sudo chmod 0755 /usr/local/bin/terraform
@@ -164,7 +164,7 @@ install_terraform() {
 
 install_jq() {
 	if ! have jq --version ${1}; then
-		sudo curl -LSs -o /usr/local/bin/jq \
+		sudo curl -LSsf -o /usr/local/bin/jq \
 			https://github.com/stedolan/jq/releases/download/jq-${1}/jq-linux64
 		sudo chmod 0755 /usr/local/bin/jq
 		installed jq --version
@@ -200,7 +200,7 @@ install_ruby() {
 
 install_bosh_init() {
 	if ! have bosh-init -v ${1}; then
-		sudo curl -LSs -o /usr/local/bin/bosh-init \
+		sudo curl -LSsf -o /usr/local/bin/bosh-init \
 			https://s3.amazonaws.com/bosh-init-artifacts/bosh-init-${1}-linux-amd64
 		sudo chmod 0755 /usr/local/bin/bosh-init
 		installed bosh-init -v

@@ -152,42 +152,12 @@ install_spruce() {
 	fi
 }
 
-install_safe() {
-	local v=$(github_version ${1} starkandwayne/safe)
-	if ! have safe -v ${v}; then
-		sudo curl -LSs -o /usr/local/bin/safe \
-			https://github.com/starkandwayne/safe/releases/download/v${v}/safe-linux-amd64
-		sudo chmod 0755 /usr/local/bin/safe
-		installed safe -v
-	fi
-}
-
-install_vault() {
-	if ! have vault -v $1; then
-		curl -LSs -o /tmp/vault.zip \
-			https://releases.hashicorp.com/vault/${1}/vault_${1}_linux_amd64.zip
-		(cd /usr/local/bin ; sudo unzip -u /tmp/vault.zip ; rm /tmp/vault.zip)
-		sudo chmod 0755 /usr/local/bin/vault
-		installed vault -v
-	fi
-}
-
 install_jq() {
 	if ! have jq --version ${1}; then
 		sudo curl -LSs -o /usr/local/bin/jq \
 			https://github.com/stedolan/jq/releases/download/jq-${1}/jq-linux64
 		sudo chmod 0755 /usr/local/bin/jq
 		installed jq --version
-	fi
-}
-
-install_genesis() {
-	local v=$(github_version ${1} starkandwayne/genesis)
-	if ! have genesis -v ${v}; then
-		sudo curl -LSs -o /usr/local/bin/genesis \
-			https://github.com/starkandwayne/genesis/releases/download/v${v}/genesis
-		sudo chmod 0755 /usr/local/bin/genesis
-		installed genesis -v
 	fi
 }
 
@@ -241,22 +211,6 @@ install_cf_cli() {
   	sudo chmod 0755 /usr/local/bin/cf
   	installed cf -v "CF CLI"
 	fi
-}
-
-install_certstrap() {
-	sudo rm -f /usr/local/bin/certstrap || true
-	sudo curl -o /usr/local/bin/certstrap \
-	https://raw.githubusercontent.com/starkandwayne/jumpbox/master/bin/certstrap
-	sudo chmod 0755 /usr/local/bin/certstrap
-	echo "Installed certstrap"
-}
-
-install_sipcalc() {
-	sudo rm -f /usr/local/bin/sipcalc || true
-	sudo curl -o /usr/local/bin/sipcalc \
-	https://raw.githubusercontent.com/starkandwayne/jumpbox/master/bin/sipcalc
-	sudo chmod 0755 /usr/local/bin/sipcalc
-	echo "Installed sipcalc"
 }
 
 passwordless_sudo() {
@@ -360,12 +314,7 @@ case "$1" in
 	install_core_packages
 	install_jq        ${WANT_JQ_VERSION:-1.5}
 	install_spruce    ${WANT_SPRUCE_VERSION:-latest}
-	install_safe      ${WANT_SAFE_VERSION:-latest}
-	install_vault     ${WANT_VAULT_VERSION:-0.6.0}
 	install_bosh_init ${WANT_BOSH_INIT_VERSION:-0.0.81}
-	install_genesis   ${WANT_GENESIS_VERSION:-latest}
-	install_certstrap
-	install_sipcalc
 	passwordless_sudo
 	all_done
 	;;
@@ -447,11 +396,6 @@ case "$1" in
 	version cf -v
 	version jq --version
 	version spruce -v
-	version safe -v
-	version vault -v
-	version genesis -v
-	version certstrap -v
-	version sipcalc -v
 	git_config
 	echo
 	say "To bootstrap this installation,  try \`jumpbox system\`"

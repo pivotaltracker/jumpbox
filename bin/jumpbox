@@ -301,8 +301,8 @@ case "$1" in
 (user)
 	hello
 	install_rvm
-	install_ruby     ${WANT_RUBY_VERSION:-2.2.4}
-	install_bosh_cli ${WANT_BOSH_VERSION:-1.3184.1.0}
+	install_ruby     ${WANT_RUBY_VERSION:-2.2.5}
+	install_bosh_cli ${WANT_BOSH_VERSION:-1.3262.4.0}
 	install_cf_cli
 	configure_git_identity
 	all_done
@@ -314,7 +314,7 @@ case "$1" in
 	install_core_packages
 	install_jq        ${WANT_JQ_VERSION:-1.5}
 	install_spruce    ${WANT_SPRUCE_VERSION:-latest}
-	install_bosh_init ${WANT_BOSH_INIT_VERSION:-0.0.81}
+	install_bosh_init ${WANT_BOSH_INIT_VERSION:-0.0.96}
 	passwordless_sudo
 	all_done
 	;;
